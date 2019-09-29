@@ -1,0 +1,49 @@
+type Query{
+  events(query: String): [Event!]!
+}
+
+type Mutation{
+  createEvent(data:CreateEventInput): Event!
+  updateEvent(eventId: String!, data: UpdateEventInput): Event!
+}
+
+type Subscription{
+  _empty: String
+}
+
+type Event{
+  id: ID! 
+  title: String!
+  beginDate: String!
+  endDate: String!
+  type: EventType!
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+input CreateEventInput {
+  title: String!
+  beginDate: String!
+  endDate: String!
+  type: EventType!
+}
+
+input UpdateEventInput {
+  title: String
+  beginDate: String
+  endDate: String
+  type: EventType
+}
+
+
+enum EventType{
+  REUNION
+  AG
+  WORKSHOP
+  BIRTHDAY
+  KOOLPARTY
+  RANDONNEE
+  OTHER
+}
+
+

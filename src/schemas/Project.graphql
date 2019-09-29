@@ -1,0 +1,87 @@
+extend type Query {
+  projects(query: String): [Project!]!
+  deadlines(query: String): [Deadline!]!
+  project(query: String): Project!
+  backlogs(query: String): [Backlog!]!
+  backlog(query: String): Backlog!
+}
+
+extend type Mutation{
+  createProject(roomId: String, data: CreateProjectInput): Project!
+  createDeadLine(projectId: String, data: CreateDeadLineInput): Deadline!
+  createBacklog(projectId: String, data: CreateBacklogInput): Backlog!
+  addTask(backlogId: String, task: CreateTaskInput): Backlog!
+  updateTask(taskId: String, data: UpdateTaskInput): Backlog!
+}
+
+input CreateProjectInput {
+  title: String!
+  description: String
+}
+ 
+type Project{
+  id: ID! 
+  title: String!
+  description: String
+  technologies: [String!]!
+  room: Room! 
+  backlogs: [Backlog!]
+  deadlines: [Deadline!] 
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+input CreateDeadLineInput {
+  goals: [String!]!
+  date: String!
+}
+
+
+type Deadline{
+  id: ID! 
+  goals: [String!]! 
+  date: String!
+  project: Project!
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+
+input CreateBacklogInput{
+  tasks: [CreateTaskInput!]!
+}
+
+type Backlog{
+  id: ID! 
+  name: String!
+  project: Project!
+  tasks: [Task!]
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+input CreateTaskInput{
+  task: String!
+  status: TaskStatus!
+}
+
+input UpdateTaskInput{
+  task: String!
+  status: TaskStatus!
+}
+
+type Task{
+  id: ID! 
+  backlog: Backlog!
+  task: String!
+  status: TaskStatus!
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+enum TaskStatus{
+  TODO
+  DONE
+  TODO_URGENT
+  RESOLUTION
+}

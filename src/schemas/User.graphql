@@ -1,0 +1,58 @@
+type Login{
+  id: ID! 
+  email: String! 
+  pseudo: String! 
+  password: String!
+  user: User! 
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+type User {
+  id: ID! 
+  firstName: String!
+  lastName: String!
+  birthDate: String!
+  role: UserRole!
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+extend type Query {
+    me: Login!
+    users(query: String, id: String ): [User!]!
+}
+
+extend type Mutation {
+    signUp(data: SignUpInput): Login!
+    login(data: LoginInput): Login!
+    updateUser(id: String, data: UpdateUserInput): User!
+    makeUserAdmin(userId: String): User!
+}
+
+input LoginInput {
+  pseudo: String
+  email: String
+  password: String!
+}
+
+input SignUpInput {
+  firstName: String!
+  lastName: String!
+  birthDate: String!
+  password: String!
+  email: String!
+  pseudo: String!
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  birthDate: String
+  password: String
+}
+
+enum UserRole{
+  ADMIN
+  USER
+}

@@ -1,0 +1,73 @@
+type Room{
+  id: ID! 
+  name: String!
+  master: User! 
+  project: Project
+  users: [User!]! 
+  posts: [Post!]!
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+type Post{
+  id: ID! 
+  room: Room!
+  author:  User!
+  content: String
+  images: [Image!]
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+type Image{
+  id: ID! 
+  post: Post!
+  name: String!
+  mimetype: String!
+  encoding: String!
+  createdAt: String! 
+  updatedAt: String! 
+}
+
+extend type Query{
+  rooms(query: String): [Room!]!
+  posts(query: String): [Post!]!
+  images(query: String): [Image!]!
+  post(query: String): Post!
+  image(query: String): Image!
+}
+
+extend type Mutation{
+  createRoom(data: CreateRoomInput): Room!
+  updateRoom(id: String, data: UpdateRoomInput): Room!
+  manageRoomMembers(action: ManageMembersAction, membersIds: [String!]!): Room!
+  createPost(roomId: String, data: CreatePostInput): Post!
+  uploadImage(postId: String, data: UploadImageInput): Image!
+}
+
+enum ManageMembersAction{
+  ADD
+  REMOVE
+}
+
+input UploadImageInput{
+  name: String!
+  mimetype: String!
+  encoding: String!
+}
+
+input CreatePostInput{
+  authorId:  String!
+  content: String!
+}
+
+input CreateRoomInput { 
+  masterId: String!
+  name: String!
+  membersIds: [String!]! 
+}
+
+input UpdateRoomInput{
+  masterId: String
+  name: String
+}

@@ -1,0 +1,121 @@
+type Login{
+  id: ID! @id
+  email: String! @unique
+  pseudo: String! @unique
+  password: String!
+  user: User! @unique
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type User {
+  id: ID! @id
+  firstName: String!
+  lastName: String!
+  birthDate: DateTime!
+  role: UserRole!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum UserRole{
+  ADMIN
+  USER
+}
+
+type Room{
+  id: ID! @id
+  name: String!
+  master: User @relation(name: "UserMasterToRoom")
+  project: Project
+  users: [User!]! @relation(name: "UsersToRoom")
+  posts: [Post!]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Post{
+  id: ID! @id
+  room: Room!
+  author:  User!
+  content: String
+  images: [Image!]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Image{
+  id: ID! @id
+  post: Post!
+  name: String!
+  mimetype: String!
+  encoding: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Project{
+  id: ID! @id
+  title: String!
+  description: String
+  technologies: [String!]!@scalarList(strategy: RELATION)
+  room: Room! @relation(link: INLINE)
+  backlogs: [Backlog!]!
+  deadlines: [Deadline!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Deadline{
+  id: ID! @id
+  goals: [String!]! @scalarList(strategy: RELATION)
+  date: DateTime!
+  project: Project!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Backlog{
+  id: ID! @id
+  project: Project!
+  name: String!
+  tasks: [Task!] @relation(name: "TaskToBacklog")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Task{
+  id: ID! @id
+  backlog: Backlog! @relation(link: INLINE, name:"TaskToBacklog")
+  task: String!
+  status: TaskStatus!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Event{
+  id: ID! @id
+  title: String!
+  beginDate: DateTime!
+  endDate: DateTime!
+  type: EventType
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum TaskStatus{
+  TODO
+  DONE
+  TODO_URGENT
+  RESOLUTION
+}
+
+enum EventType{
+  REUNION
+  AG
+  WORKSHOP
+  BIRTHDAY
+  KOOLPARTY
+  RANDONNEE
+  OTHER
+}
