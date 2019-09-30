@@ -21,13 +21,20 @@ type User {
 extend type Query {
     me: Login!
     users(query: String, id: String ): [User!]!
+    logins(query: String, id: String ): [Login!]!
 }
 
 extend type Mutation {
     signUp(data: SignUpInput): Login!
-    login(data: LoginInput): Login!
+    login(data: LoginInput): AuthPayload!
     updateUser(id: String, data: UpdateUserInput): User!
-    makeUserAdmin(userId: String): User!
+    makeUserAdmin(userID: String): User!
+    makeMeAdmin: User!
+}
+
+type AuthPayload {
+  token: String!
+  user: Login! 
 }
 
 input LoginInput {

@@ -19,6 +19,7 @@
     "graphql-import": "^0.7.1",
     "graphql-import-node": "0.0.4",
     "graphql-yoga": "^1.14.10",
+    "jsonwebtoken": "^8.5.1",
     "prisma-binding": "^2.3.16"
   }
 }
