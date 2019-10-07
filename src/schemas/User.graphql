@@ -14,6 +14,7 @@ type User {
   lastName: String!
   birthDate: String!
   role: UserRole!
+  rooms: [Room!]
   createdAt: String! 
   updatedAt: String! 
 }
@@ -25,9 +26,9 @@ extend type Query {
 }
 
 extend type Mutation {
-    signUp(data: SignUpInput): Login!
+    signUp(data: SignUpInput): AuthPayload!
     login(data: LoginInput): AuthPayload!
-    updateUser(id: String, data: UpdateUserInput): User!
+    updateMe(data: UpdateUserInput): Login!
     makeUserAdmin(userID: String): User!
     makeMeAdmin: User!
 }
@@ -53,6 +54,7 @@ input SignUpInput {
 }
 
 input UpdateUserInput {
+  email: String
   firstName: String
   lastName: String
   birthDate: String

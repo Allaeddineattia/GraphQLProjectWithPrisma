@@ -1,29 +1,35 @@
 extend type Query {
   projects(query: String): [Project!]!
-  deadlines(query: String): [Deadline!]!
-  project(query: String): Project!
+  deadlines: [Deadline!]!
   backlogs(query: String): [Backlog!]!
-  backlog(query: String): Backlog!
 }
 
 extend type Mutation{
-  createProject(roomId: String, data: CreateProjectInput): Project!
-  createDeadLine(projectId: String, data: CreateDeadLineInput): Deadline!
-  createBacklog(projectId: String, data: CreateBacklogInput): Backlog!
-  addTask(backlogId: String, task: CreateTaskInput): Backlog!
-  updateTask(taskId: String, data: UpdateTaskInput): Backlog!
+  createProject(roomId: String!, data: CreateProjectInput!): Project!
+  updateProject(projectId: String!, data: UpdateProjectInput!): Project!
+  createDeadLine(projectId: String!, data: CreateDeadLineInput!): Deadline!
+  createBacklog(projectId: String!, data: CreateBacklogInput!): Backlog!
+  addTasks(backlogId: String!, data: [CreateTaskInput!]!): Backlog!
+  updateTask(taskId: String!, data: UpdateTaskInput!): Task!
+}
+
+input UpdateProjectInput {
+  title: String
+  description: String
+  technologies: [String!]
 }
 
 input CreateProjectInput {
   title: String!
   description: String
+  technologies: [String!]
 }
  
 type Project{
   id: ID! 
   title: String!
   description: String
-  technologies: [String!]!
+  technologies: [String!]
   room: Room! 
   backlogs: [Backlog!]
   deadlines: [Deadline!] 
@@ -48,7 +54,13 @@ type Deadline{
 
 
 input CreateBacklogInput{
-  tasks: [CreateTaskInput!]!
+  name: String!
+  tasks: [CreateTaskInput!]
+}
+
+input CreateTaskInput{
+  task: String!
+  status: TaskStatus!
 }
 
 type Backlog{
@@ -60,14 +72,11 @@ type Backlog{
   updatedAt: String! 
 }
 
-input CreateTaskInput{
-  task: String!
-  status: TaskStatus!
-}
+
 
 input UpdateTaskInput{
-  task: String!
-  status: TaskStatus!
+  task: String
+  status: TaskStatus
 }
 
 type Task{

@@ -1,5 +1,5 @@
 # source: http://localhost:4466/CLL
-# timestamp: Sun Sep 29 2019 22:53:42 GMT+0100 (Central European Standard Time)
+# timestamp: Wed Oct 02 2019 11:08:21 GMT+0100 (Central European Standard Time)
 
 type AggregateBacklog {
   count: Int!
@@ -3193,8 +3193,13 @@ input RoomCreateInput {
   name: String!
   master: UserCreateOneInput
   project: ProjectCreateOneWithoutRoomInput
-  users: UserCreateManyInput
+  users: UserCreateManyWithoutRoomsInput
   posts: PostCreateManyWithoutRoomInput
+}
+
+input RoomCreateManyWithoutUsersInput {
+  create: [RoomCreateWithoutUsersInput!]
+  connect: [RoomWhereUniqueInput!]
 }
 
 input RoomCreateOneWithoutPostsInput {
@@ -3212,14 +3217,22 @@ input RoomCreateWithoutPostsInput {
   name: String!
   master: UserCreateOneInput
   project: ProjectCreateOneWithoutRoomInput
-  users: UserCreateManyInput
+  users: UserCreateManyWithoutRoomsInput
 }
 
 input RoomCreateWithoutProjectInput {
   id: ID
   name: String!
   master: UserCreateOneInput
-  users: UserCreateManyInput
+  users: UserCreateManyWithoutRoomsInput
+  posts: PostCreateManyWithoutRoomInput
+}
+
+input RoomCreateWithoutUsersInput {
+  id: ID
+  name: String!
+  master: UserCreateOneInput
+  project: ProjectCreateOneWithoutRoomInput
   posts: PostCreateManyWithoutRoomInput
 }
 
@@ -3248,6 +3261,141 @@ type RoomPreviousValues {
   name: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+input RoomScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoomScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoomScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoomScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type RoomSubscriptionPayload {
@@ -3291,12 +3439,33 @@ input RoomUpdateInput {
   name: String
   master: UserUpdateOneInput
   project: ProjectUpdateOneWithoutRoomInput
-  users: UserUpdateManyInput
+  users: UserUpdateManyWithoutRoomsInput
   posts: PostUpdateManyWithoutRoomInput
+}
+
+input RoomUpdateManyDataInput {
+  name: String
 }
 
 input RoomUpdateManyMutationInput {
   name: String
+}
+
+input RoomUpdateManyWithoutUsersInput {
+  create: [RoomCreateWithoutUsersInput!]
+  connect: [RoomWhereUniqueInput!]
+  set: [RoomWhereUniqueInput!]
+  disconnect: [RoomWhereUniqueInput!]
+  delete: [RoomWhereUniqueInput!]
+  update: [RoomUpdateWithWhereUniqueWithoutUsersInput!]
+  updateMany: [RoomUpdateManyWithWhereNestedInput!]
+  deleteMany: [RoomScalarWhereInput!]
+  upsert: [RoomUpsertWithWhereUniqueWithoutUsersInput!]
+}
+
+input RoomUpdateManyWithWhereNestedInput {
+  where: RoomScalarWhereInput!
+  data: RoomUpdateManyDataInput!
 }
 
 input RoomUpdateOneRequiredWithoutPostsInput {
@@ -3317,14 +3486,26 @@ input RoomUpdateWithoutPostsDataInput {
   name: String
   master: UserUpdateOneInput
   project: ProjectUpdateOneWithoutRoomInput
-  users: UserUpdateManyInput
+  users: UserUpdateManyWithoutRoomsInput
 }
 
 input RoomUpdateWithoutProjectDataInput {
   name: String
   master: UserUpdateOneInput
-  users: UserUpdateManyInput
+  users: UserUpdateManyWithoutRoomsInput
   posts: PostUpdateManyWithoutRoomInput
+}
+
+input RoomUpdateWithoutUsersDataInput {
+  name: String
+  master: UserUpdateOneInput
+  project: ProjectUpdateOneWithoutRoomInput
+  posts: PostUpdateManyWithoutRoomInput
+}
+
+input RoomUpdateWithWhereUniqueWithoutUsersInput {
+  where: RoomWhereUniqueInput!
+  data: RoomUpdateWithoutUsersDataInput!
 }
 
 input RoomUpsertWithoutPostsInput {
@@ -3335,6 +3516,12 @@ input RoomUpsertWithoutPostsInput {
 input RoomUpsertWithoutProjectInput {
   update: RoomUpdateWithoutProjectDataInput!
   create: RoomCreateWithoutProjectInput!
+}
+
+input RoomUpsertWithWhereUniqueWithoutUsersInput {
+  where: RoomWhereUniqueInput!
+  update: RoomUpdateWithoutUsersDataInput!
+  create: RoomCreateWithoutUsersInput!
 }
 
 input RoomWhereInput {
@@ -3482,6 +3669,7 @@ input RoomWhereInput {
 
 input RoomWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type Subscription {
@@ -3958,6 +4146,7 @@ type User implements Node {
   lastName: String!
   birthDate: DateTime!
   role: UserRole!
+  rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -3978,16 +4167,25 @@ input UserCreateInput {
   lastName: String!
   birthDate: DateTime!
   role: UserRole!
+  rooms: RoomCreateManyWithoutUsersInput
 }
 
-input UserCreateManyInput {
-  create: [UserCreateInput!]
+input UserCreateManyWithoutRoomsInput {
+  create: [UserCreateWithoutRoomsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutRoomsInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  birthDate: DateTime!
+  role: UserRole!
 }
 
 """An edge in a connection."""
@@ -4280,6 +4478,7 @@ input UserUpdateDataInput {
   lastName: String
   birthDate: DateTime
   role: UserRole
+  rooms: RoomUpdateManyWithoutUsersInput
 }
 
 input UserUpdateInput {
@@ -4287,6 +4486,7 @@ input UserUpdateInput {
   lastName: String
   birthDate: DateTime
   role: UserRole
+  rooms: RoomUpdateManyWithoutUsersInput
 }
 
 input UserUpdateManyDataInput {
@@ -4296,23 +4496,23 @@ input UserUpdateManyDataInput {
   role: UserRole
 }
 
-input UserUpdateManyInput {
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueNestedInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-  deleteMany: [UserScalarWhereInput!]
-  upsert: [UserUpsertWithWhereUniqueNestedInput!]
-}
-
 input UserUpdateManyMutationInput {
   firstName: String
   lastName: String
   birthDate: DateTime
   role: UserRole
+}
+
+input UserUpdateManyWithoutRoomsInput {
+  create: [UserCreateWithoutRoomsInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutRoomsInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutRoomsInput!]
 }
 
 input UserUpdateManyWithWhereNestedInput {
@@ -4336,9 +4536,16 @@ input UserUpdateOneRequiredInput {
   upsert: UserUpsertNestedInput
 }
 
-input UserUpdateWithWhereUniqueNestedInput {
+input UserUpdateWithoutRoomsDataInput {
+  firstName: String
+  lastName: String
+  birthDate: DateTime
+  role: UserRole
+}
+
+input UserUpdateWithWhereUniqueWithoutRoomsInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
+  data: UserUpdateWithoutRoomsDataInput!
 }
 
 input UserUpsertNestedInput {
@@ -4346,10 +4553,10 @@ input UserUpsertNestedInput {
   create: UserCreateInput!
 }
 
-input UserUpsertWithWhereUniqueNestedInput {
+input UserUpsertWithWhereUniqueWithoutRoomsInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+  update: UserUpdateWithoutRoomsDataInput!
+  create: UserCreateWithoutRoomsInput!
 }
 
 input UserWhereInput {
@@ -4557,6 +4764,9 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  rooms_every: RoomWhereInput
+  rooms_some: RoomWhereInput
+  rooms_none: RoomWhereInput
 }
 
 input UserWhereUniqueInput {

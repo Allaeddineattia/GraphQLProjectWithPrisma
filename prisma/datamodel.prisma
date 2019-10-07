@@ -59,10 +59,10 @@ type Project{
   id: ID! @id
   title: String!
   description: String
-  technologies: [String!]!@scalarList(strategy: RELATION)
+  technologies: [String!]@scalarList(strategy: RELATION)
   room: Room! @relation(link: INLINE)
-  backlogs: [Backlog!]!
-  deadlines: [Deadline!]!
+  backlogs: [Backlog!]
+  deadlines: [Deadline!]
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

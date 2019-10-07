@@ -34,15 +34,13 @@ extend type Query{
   posts(query: String): [Post!]!
   images(query: String): [Image!]!
   post(query: String): Post!
-  image(query: String): Image!
+  room(title: String, id:String): Room!
 }
 
 extend type Mutation{
-  createRoom(data: CreateRoomInput): Room!
-  updateRoom(id: String, data: UpdateRoomInput): Room!
-  manageRoomMembers(action: ManageMembersAction, membersIds: [String!]!): Room!
-  createPost(roomId: String, data: CreatePostInput): Post!
-  uploadImage(postId: String, data: UploadImageInput): Image!
+  createRoom(data: CreateRoomInput!): Room!
+  updateRoom(id: String!, data: UpdateRoomInput!): Room!
+  createPost(roomId: String!, data: CreatePostInput!): Post!
 }
 
 enum ManageMembersAction{
@@ -57,17 +55,23 @@ input UploadImageInput{
 }
 
 input CreatePostInput{
-  authorId:  String!
   content: String!
+  images: [UploadImageInput!]
+
 }
 
 input CreateRoomInput { 
-  masterId: String!
   name: String!
-  membersIds: [String!]! 
+  memberIds: [String!] 
 }
 
 input UpdateRoomInput{
   masterId: String
   name: String
+  members: UpdateRoomMembersInput
+}
+
+input UpdateRoomMembersInput{
+  action: ManageMembersAction!
+  Ids: [String!]!
 }

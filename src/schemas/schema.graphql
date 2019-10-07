@@ -1,5 +1,5 @@
 type Query{
-  events(query: String): [Event!]!
+  events(query: String, type:EventType): [Event!]!
 }
 
 type Mutation{
